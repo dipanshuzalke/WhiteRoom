@@ -7,6 +7,7 @@ import {
   CreateUserSchema,
   SigninSchema,
 } from "@repo/common/types";
+import { PrismaClient } from "@repo/db/client";
 
 const app = express();
 
