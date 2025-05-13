@@ -7,22 +7,36 @@ import {
   CreateUserSchema,
   SigninSchema,
 } from "@repo/common/types";
-import { PrismaClient } from "@repo/db/client";
+import { prismaClient } from "@repo/db/client";
 
 const app = express();
 
-app.post("/signup", (req, res) => {
-  const data = CreateUserSchema.safeParse(req.body);
-  if (!data.success) {
+app.post("/signup", async (req, res) => {
+  const parsedData = CreateUserSchema.safeParse(req.body);
+  if (!parsedData.success) {
     res.json({
       message: "Incorrect inputs",
     });
     return;
   }
 
-  res.json({
-    userId: "123",
-  });
+  try {
+    await prismaClient.user.create({
+      data: {
+        email: parsedData.data.username,
+        password: parsedData.data.password,
+        name: parsedData.data.password,
+      },
+    });
+
+    res.json({
+      userId: "123",
+    });
+  } catch (error) {
+    res.status(411).json({
+      message: "User already exist with this username",
+    });
+  }
 });
 
 app.post("/signin", (req, res) => {
