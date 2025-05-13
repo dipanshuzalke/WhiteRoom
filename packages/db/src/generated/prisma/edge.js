@@ -169,16 +169,17 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres:2fq2GyHUM$3CAyt@db.fawslytkdmtzhfczowcm.supabase.co:5432/postgres"
+        "value": null
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id       String @id @default(uuid())\n  email    String\n  password String\n  name     String\n  photo    String\n  rooms    Room[]\n  chats    Chat[]\n}\n\nmodel Room {\n  id        Int      @id @default(autoincrement())\n  slug      String   @unique\n  createdAt DateTime @default(now())\n  adminId   String\n  admin     User     @relation(fields: [adminId], references: [id])\n  chats     Chat[]\n}\n\nmodel Chat {\n  id      Int    @id @default(autoincrement())\n  roomId  Int\n  message String\n  userId  String\n  room    Room   @relation(fields: [roomId], references: [id])\n  user    User   @relation(fields: [userId], references: [id])\n}\n",
-  "inlineSchemaHash": "ae0a2527a3a9384669f2aa06d2d86a0f2c255c2a75f4c0bfea1bcf0fa65f4cb9",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id       String @id @default(uuid())\n  email    String\n  password String\n  name     String\n  photo    String\n  rooms    Room[] // 👈 one-to-many: one user (admin) can have many rooms\n  chats    Chat[] // 👈 one-to-many: one user can send many chats\n}\n\nmodel Room {\n  id        Int      @id @default(autoincrement())\n  slug      String   @unique\n  createdAt DateTime @default(now())\n  adminId   String\n  admin     User     @relation(fields: [adminId], references: [id])\n  chats     Chat[] // 👈 one-to-many: one room can have many chats\n}\n\nmodel Chat {\n  id      Int    @id @default(autoincrement())\n  roomId  Int\n  message String\n  userId  String\n  room    Room   @relation(fields: [roomId], references: [id])\n  user    User   @relation(fields: [userId], references: [id])\n}\n",
+  "inlineSchemaHash": "956947ba55673ef9cb6d2e5ec761580fbe3de61c974a208ba2a22ebdead4e36a",
   "copyEngine": true
 }
 config.dirname = '/'
