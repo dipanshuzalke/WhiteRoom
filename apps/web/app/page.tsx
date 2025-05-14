@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import styles from "./page.module.css";
@@ -10,12 +10,21 @@ export default function Home() {
 
   return (
     <div className={styles.page}>
-      <input value={roomId} type="text" placeholder="Room id" onChange={(e) => {
-        setRoomId(e.target.value)
-      }}/>
-      <button onClick={() => {
-        router.push(`/room/${roomId}`)
-      }}>Join room</button>
+      <input
+        value={roomId}
+        type="text"
+        placeholder="Room id"
+        onChange={(e) => {
+          setRoomId(e.target.value);
+        }}
+      />
+      <button
+        onClick={() => {
+          router.push(`/room/${roomId}`);
+        }}
+      >
+        Join room
+      </button>
     </div>
   );
 }
