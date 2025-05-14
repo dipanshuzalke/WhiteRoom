@@ -35,3 +35,10 @@ model Chat {
   room      Room      @relation(fields: [roomId], references: [id])
   user      User      @relation(fields: [userId], references: [id])
 }
+
+model Message {
+  id        String   @id @default(uuid())
+  roomId    String
+  message   String
+  createdAt DateTime @default(now())
+}

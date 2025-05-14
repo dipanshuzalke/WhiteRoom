@@ -142,6 +142,13 @@ exports.Prisma.ChatScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  roomId: 'roomId',
+  message: 'message',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -161,7 +168,8 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   User: 'User',
   Room: 'Room',
-  Chat: 'Chat'
+  Chat: 'Chat',
+  Message: 'Message'
 };
 
 /**

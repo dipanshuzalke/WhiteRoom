@@ -9,8 +9,7 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js"
     }
-  }
-,
+  },
   "scripts": {
     "build": "tsc -b"
   },
