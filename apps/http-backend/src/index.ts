@@ -7,7 +7,7 @@ import {
   CreateUserSchema,
   SigninSchema,
 } from "@repo/common/types";
-import { prismaClient } from "@repo/db/client";
+import { prismaClient } from "@repo/db";
 
 const app = express();
 app.use(express.json());
@@ -66,6 +66,7 @@ app.post("/signin", async (req, res) => {
 
   const token = jwt.sign(
     {
+      //@ts-ignore
       userId: user.id,
     },
     JWT_SECRET
@@ -100,6 +101,6 @@ app.post("/room", middleware, async (req, res) => {
   });
 });
 
-app.listen(3000, () => {
+app.listen(3001, () => {
   console.log("Server listening on port 3000");
 });
