@@ -89,16 +89,22 @@ app.post("/room", middleware, async (req, res) => {
   // @ts-ignore  Todo: Fix this
   const userId = req.userId;
 
-  await prismaClient.room.create({
-    data: {
-      slug: parsedData.data.name,
-      adminId: userId,
-    },
-  });
+  try {
+    const room = await prismaClient.room.create({
+      data: {
+        slug: parsedData.data.name,
+        adminId: userId,
+      },
+    });
 
-  res.json({
-    roomId: 123,
-  });
+    res.json({
+      roomId: room.id,
+    });
+  } catch (error) {
+    res.status(411).json({
+      message: "Room already exist with this name",
+    });
+  }
 });
 
 app.listen(3001, () => {
